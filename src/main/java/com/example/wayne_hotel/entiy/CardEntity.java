@@ -1,4 +1,4 @@
 package com.example.wayne_hotel.entiy;
 
-public class RoomsEntity {
+public class CardEntity {
 }
