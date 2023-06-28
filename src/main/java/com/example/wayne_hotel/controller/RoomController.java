@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/hotel/panel")
+@RequestMapping("/room/panel")
 @RequiredArgsConstructor
 public class RoomController {
     private final RoomService roomService;

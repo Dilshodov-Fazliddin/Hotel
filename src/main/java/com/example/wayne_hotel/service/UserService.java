@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class UserService {
         UserEntity user = modelMapper.map(userDto, UserEntity.class);
         user.setCanceledRequest(0);
         user.setUnpaidRequest(0);
-        user.setIsBlocked(false);
+        user.setIsBlocked(true);
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
@@ -38,8 +39,8 @@ public class UserService {
         UserEntity user =
                 userRepository.findUserEntitiesByUsername(loginDto.getUsername())
                         .orElseThrow(()->new DataNotFoundException("Sorry,User not found"));
-        if (!user.getIsBlocked()){
-            throw new AuthenticationFailedException("Your account has Blocked");
+        if (user.getIsBlocked()){
+            throw new AuthenticationFailedException("Your account has blocked");
         }
         if (passwordEncoder.matches(loginDto.getPassword(),user.getPassword())){
             return JwtTokenResponse.builder()
@@ -57,4 +58,19 @@ public class UserService {
         String accessToken = jwtService.generateAccessToken(user);
         return JwtTokenResponse.builder().jwtToken(accessToken).build();
     }
+
+    public void blockUsersById(UUID id){
+        UserEntity user=userRepository.findById(id)
+                .orElseThrow(()->new DataNotFoundException("User not found"));
+        user.setIsBlocked(true);
+        userRepository.save(user);
+    }
+
+    public void unBlockUsersById(UUID id){
+        UserEntity user=userRepository.findById(id)
+                .orElseThrow(()->new DataNotFoundException("User not found"));
+        user.setIsBlocked(false);
+        userRepository.save(user);
+    }
 }
+
