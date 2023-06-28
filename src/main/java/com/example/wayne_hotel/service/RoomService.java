@@ -40,6 +40,7 @@ public class RoomService {
         RoomEntity room =roomRepository.findById(id)
                 .orElseThrow(()-> new DataNotFoundException("room not found please retry"));
     modelMapper.map(update,room);
+
     return roomRepository.save(room);
     }
 
