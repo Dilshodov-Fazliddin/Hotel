@@ -19,13 +19,13 @@ import java.util.List;
 public class AuthController {
     private final UserService userService;
     @PostMapping("/sign-up")
-    public UserEntity saveUser(@RequestBody UserDto userDto){
-        return userService.saveUser(userDto,List.of(UserRole.ROLE_USER));
+    public ResponseEntity<UserEntity> saveUser(@RequestBody UserDto userDto){
+        return ResponseEntity.ok(userService.saveUser(userDto,List.of(UserRole.ROLE_USER)));
     }
 
     @GetMapping("/login")
-    public JwtTokenResponse login(@RequestBody LoginDto loginDto){
-        return userService.login(loginDto);
+    public ResponseEntity<JwtTokenResponse> login(@RequestBody LoginDto loginDto){
+        return ResponseEntity.ok(userService.login(loginDto));
     }
 
     @GetMapping("/refresh-token")

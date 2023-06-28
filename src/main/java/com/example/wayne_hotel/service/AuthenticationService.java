@@ -29,7 +29,7 @@ public class AuthenticationService {
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 
-    public List<SimpleGrantedAuthority>getRoles(List<String>roles)throws JsonGenerationException {
+    public List<SimpleGrantedAuthority>getRoles(List<String>roles)throws JsonProcessingException {
         return roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();

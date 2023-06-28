@@ -2,10 +2,7 @@ package com.example.wayne_hotel.entiy;
 
 import com.example.wayne_hotel.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,10 +34,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @JsonIgnore
     private Integer canceledRequest;
     private Boolean isBlocked;
-
+    private String roomNumber;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String ROLE="ROLE_";
         List< SimpleGrantedAuthority>authorities=new ArrayList<>();
         roles.forEach((role)->{
             authorities.add(new SimpleGrantedAuthority(role.name()));

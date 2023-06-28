@@ -17,6 +17,4 @@ public class CardDto {
     private String number;
     private Double balance;
     private CardType type;
-    @OneToMany
-    private List<UserEntity> ownerId;
 }

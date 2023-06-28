@@ -1,8 +1,7 @@
 package com.example.wayne_hotel.entiy;
 
 import com.example.wayne_hotel.enums.CardType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,7 +16,8 @@ import java.util.List;
 public class CardEntity extends BaseEntity{
     private String number;
     private Double balance;
+    @Enumerated(value = EnumType.STRING)
     private CardType type;
-    @OneToMany
-    private List<UserEntity> ownerId;
+    @ManyToOne
+    private UserEntity owner;
 }
