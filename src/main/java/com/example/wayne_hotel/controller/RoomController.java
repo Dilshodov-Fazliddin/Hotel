@@ -2,6 +2,7 @@ package com.example.wayne_hotel.controller;
 
 import com.example.wayne_hotel.dto.RoomDto;
 import com.example.wayne_hotel.entiy.RoomEntity;
+import com.example.wayne_hotel.enums.RoomType;
 import com.example.wayne_hotel.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,9 @@ public class RoomController {
     public ResponseEntity<List<RoomEntity>>getAll(
             @RequestParam(required = false,defaultValue = "0")int page,
             @RequestParam(required = false,defaultValue = "3")int size,
-            @RequestParam(required = false,defaultValue = "true")boolean AscPrice
+            @RequestParam(required = false,defaultValue = "true")boolean AscPrice,
+            @RequestParam(required = false,defaultValue = "LUXURY") RoomType type
     ){
-        return ResponseEntity.status(200).body(roomService.getAll(size,page,AscPrice));
+        return ResponseEntity.status(200).body(roomService.getAll(size,page,AscPrice,type));
     }
 }

@@ -2,6 +2,7 @@ package com.example.wayne_hotel.service;
 
 import com.example.wayne_hotel.dto.RoomDto;
 import com.example.wayne_hotel.entiy.RoomEntity;
+import com.example.wayne_hotel.enums.RoomType;
 import com.example.wayne_hotel.exception.DataNotFoundException;
 import com.example.wayne_hotel.repository.RoomRepository;
 import jakarta.transaction.Transactional;
@@ -26,14 +27,14 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public List<RoomEntity> getAll(int size, int page, boolean AscPrice) {
+    public List<RoomEntity> getAll(int size, int page, boolean AscPrice,RoomType type) {
         Pageable pageable;
         if (AscPrice) {
             pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "price"));
         } else {
             pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "price"));
         }
-        return roomRepository.findAll(pageable).getContent();
+        return roomRepository.findRoomEntitiesByType(pageable,type);
     }
 
     public RoomEntity update(UUID id,RoomDto update){
