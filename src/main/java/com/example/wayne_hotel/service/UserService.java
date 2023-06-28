@@ -38,6 +38,9 @@ public class UserService {
         UserEntity user =
                 userRepository.findUserEntitiesByUsername(loginDto.getUsername())
                         .orElseThrow(()->new DataNotFoundException("Sorry,User not found"));
+        if (!user.getIsBlocked()){
+            throw new AuthenticationFailedException("Your account has Blocked");
+        }
         if (passwordEncoder.matches(loginDto.getPassword(),user.getPassword())){
             return JwtTokenResponse.builder()
                     .jwtToken(jwtService.generateAccessToken(user))
