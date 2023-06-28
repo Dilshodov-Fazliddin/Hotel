@@ -20,7 +20,11 @@ public class AuthenticationService {
 
 
         UsernamePasswordAuthenticationToken authenticationToken=
-                new UsernamePasswordAuthenticationToken(username,null,getRoles(roles));
+                new UsernamePasswordAuthenticationToken(
+                        username,
+                        null,
+                        getRoles(roles)
+                );
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }

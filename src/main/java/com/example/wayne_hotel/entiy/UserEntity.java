@@ -1,6 +1,8 @@
 package com.example.wayne_hotel.entiy;
 
 import com.example.wayne_hotel.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,12 +23,18 @@ import java.util.List;
 @Builder
 public class UserEntity extends BaseEntity implements UserDetails {
     private String name;
+    @Column(unique = true,nullable = false)
     private String email;
+    @Column(unique = true,nullable = false)
+    private String username;
+    @Column(nullable = false)
     private String password;
     private Integer age;
     @Enumerated(value = EnumType.STRING)
     private List<UserRole> roles;
+    @JsonIgnore
     private Integer unpaidRequest;
+    @JsonIgnore
     private Integer canceledRequest;
     private Boolean isBlocked;
 
@@ -42,24 +50,24 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

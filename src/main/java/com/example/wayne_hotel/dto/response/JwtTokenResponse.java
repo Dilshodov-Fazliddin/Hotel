@@ -1,15 +1,13 @@
 package com.example.wayne_hotel.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class JwtTokenResponse {
-    private String JwtToken;
+    private String jwtToken;
     private String refreshToken;
 }

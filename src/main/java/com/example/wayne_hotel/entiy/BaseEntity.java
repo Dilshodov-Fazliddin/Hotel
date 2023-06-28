@@ -1,5 +1,6 @@
 package com.example.wayne_hotel.entiy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,11 +21,16 @@ import java.util.UUID;
 @Setter
 @MappedSuperclass
 public class BaseEntity {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected UUID id;
+
+    @JsonIgnore
     @CreationTimestamp
     protected LocalDateTime createdDate;
+
+    @JsonIgnore
     @UpdateTimestamp
     protected LocalDateTime updatedDate;
 }

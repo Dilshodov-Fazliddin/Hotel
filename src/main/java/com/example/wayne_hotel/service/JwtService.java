@@ -25,7 +25,7 @@ public class JwtService {
 
     public String generateAccessToken(UserEntity userEntity){
         return Jwts.builder()
-                .signWith(SignatureAlgorithm.ES512,secretKey)
+                .signWith(SignatureAlgorithm.HS512,secretKey)
                 .setSubject(userEntity.getName())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime()+accessTokenExpiry))
