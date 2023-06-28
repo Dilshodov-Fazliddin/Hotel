@@ -29,7 +29,7 @@ public class UserService {
         UserEntity user = modelMapper.map(userDto, UserEntity.class);
         user.setCanceledRequest(0);
         user.setUnpaidRequest(0);
-        user.setIsBlocked(true);
+        user.setIsBlocked(false);
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
