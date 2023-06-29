@@ -1,5 +1,6 @@
 package com.example.wayne_hotel.entiy;
 
+import com.example.wayne_hotel.enums.HasMonitor;
 import com.example.wayne_hotel.enums.RoomType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,6 +21,7 @@ public class RoomEntity extends BaseEntity {
     private Integer size;
     @Enumerated(EnumType.STRING)
     private RoomType type;
-    private Boolean hasMonitor;
     private Double price;
+    @Enumerated(EnumType.STRING)
+    private HasMonitor monitor;
 }

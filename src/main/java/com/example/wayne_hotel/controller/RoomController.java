@@ -2,11 +2,11 @@ package com.example.wayne_hotel.controller;
 
 import com.example.wayne_hotel.dto.RoomDto;
 import com.example.wayne_hotel.entiy.RoomEntity;
+import com.example.wayne_hotel.enums.HasMonitor;
 import com.example.wayne_hotel.enums.RoomType;
 import com.example.wayne_hotel.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,8 +38,9 @@ public class RoomController {
             @RequestParam(required = false,defaultValue = "0")int page,
             @RequestParam(required = false,defaultValue = "3")int size,
             @RequestParam(required = false,defaultValue = "true")boolean AscPrice,
+            @RequestParam(required = false,defaultValue = "ULTRA") HasMonitor hasMonitor,
             @RequestParam(required = false,defaultValue = "LUXURY") RoomType type
     ){
-        return ResponseEntity.status(200).body(roomService.getAll(size,page,AscPrice,type));
+        return ResponseEntity.status(200).body(roomService.getAll(size,page,AscPrice,type,hasMonitor));
     }
 }

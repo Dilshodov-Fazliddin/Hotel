@@ -1,5 +1,6 @@
 package com.example.wayne_hotel.dto;
 
+import com.example.wayne_hotel.enums.HasMonitor;
 import com.example.wayne_hotel.enums.RoomType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,6 @@ public class RoomDto {
     private String number;
     private Integer size;
     private RoomType type;
-    private Boolean hasMonitor;
+    private HasMonitor hasMonitor;
     private Double price;
 }

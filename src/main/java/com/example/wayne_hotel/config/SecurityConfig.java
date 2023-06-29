@@ -37,10 +37,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizer) -> {
                     authorizer
                             .requestMatchers("/api/hotel/auth/**").permitAll()
-                            .requestMatchers("/hotel/panel/save").hasAnyRole("ADMIN","SUPER_ADMIN")
-                            .requestMatchers("/hotel/panel/update/").hasRole("ADMIN")
-                            .requestMatchers("/hotel/panel/delete/").hasAnyRole("SUPER_ADMIN","ADMIN")
-                            .requestMatchers("/hotel/panel/showRooms").permitAll()
+                            .requestMatchers("/room/panel/save").hasAnyRole("ADMIN","SUPER_ADMIN")
+                            .requestMatchers("/room/panel/update/").hasRole("ADMIN")
+                            .requestMatchers("/room/panel/delete/").hasAnyRole("SUPER_ADMIN","ADMIN")
+                            .requestMatchers("/room/panel/showRooms").permitAll()
                        .anyRequest().authenticated();
 
                 })
