@@ -2,10 +2,14 @@ package com.example.wayne_hotel.service;
 
 import com.example.wayne_hotel.dto.CardDto;
 import com.example.wayne_hotel.entiy.CardEntity;
+import com.example.wayne_hotel.entiy.RoomEntity;
 import com.example.wayne_hotel.entiy.UserEntity;
 import com.example.wayne_hotel.exception.CaseEmptyException;
 import com.example.wayne_hotel.exception.DataNotFoundException;
+import com.example.wayne_hotel.exception.NotEnoughBalanceException;
 import com.example.wayne_hotel.repository.CardRepository;
+import com.example.wayne_hotel.repository.RoomRepository;
+import com.example.wayne_hotel.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,6 +25,8 @@ import java.util.UUID;
 public class CardService {
     private final CardRepository cardRepository;
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final RoomRepository roomRepository;
 
     public CardEntity save(CardDto cardDto,UUID owner_id){
         CardEntity card = modelMapper.map(cardDto, CardEntity.class);
@@ -47,4 +54,23 @@ public class CardService {
         modelMapper.map(cardDto,card);
         return cardRepository.save(card);
     }
+
+    public void rentRoom(UUID userId,UUID roomId,UUID cardId){
+        UserEntity user =userRepository.findById(userId)
+                .orElseThrow(()->new DataNotFoundException("User not found"));
+        RoomEntity room = roomRepository.findById(roomId)
+                .orElseThrow(()->new DataNotFoundException("Room not found"));
+        CardEntity card =cardRepository.findById(cardId)
+                .orElseThrow(()->new DataNotFoundException("Card not found"));
+
+        if(card.getBalance()<room.getPrice()){
+            throw new NotEnoughBalanceException("not enough money");
+        }
+        card.setBalance(card.getBalance()-room.getPrice());
+        room.setOwner(user);
+        user.setRentRoom(room.getNumber());
+        cardRepository.save(card);
+        userRepository.save(user);
+        }
+
 }

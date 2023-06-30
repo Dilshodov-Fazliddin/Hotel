@@ -5,6 +5,7 @@ import com.example.wayne_hotel.enums.RoomType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,6 @@ public class RoomEntity extends BaseEntity {
     private Double price;
     @Enumerated(EnumType.STRING)
     private HasMonitor monitor;
+    @ManyToOne
+    private UserEntity owner;
 }

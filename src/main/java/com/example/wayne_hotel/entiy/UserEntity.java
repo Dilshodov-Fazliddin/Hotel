@@ -34,7 +34,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @JsonIgnore
     private Integer canceledRequest;
     private Boolean isBlocked;
-    private String roomNumber;
+    private String RentRoom;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List< SimpleGrantedAuthority>authorities=new ArrayList<>();

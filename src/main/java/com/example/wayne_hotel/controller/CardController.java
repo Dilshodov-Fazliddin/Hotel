@@ -53,4 +53,16 @@ public class CardController {
         cardService.deleteById(id);
         return ResponseEntity.status(200).body("card deleted");
     }
+
+
+    @PreAuthorize(value = "hasRole('USER')")
+    @PutMapping("/rent")
+    public ResponseEntity<String>rentRoom(
+            @RequestParam UUID userId,
+            @RequestParam UUID roomId,
+            @RequestParam UUID cardId
+    ){
+        cardService.rentRoom(userId,roomId,cardId);
+        return ResponseEntity.status(200).body("Rent successfully");
+    }
 }
