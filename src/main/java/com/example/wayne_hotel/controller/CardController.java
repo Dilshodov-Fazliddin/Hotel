@@ -65,4 +65,14 @@ public class CardController {
         cardService.rentRoom(userId,roomId,cardId);
         return ResponseEntity.status(200).body("Rent successfully");
     }
+
+    @PutMapping("/fillBalance/{cardId}")
+    @PreAuthorize(value = "hasRole('USER')")
+    public ResponseEntity<String>fillCardMoney(
+            @PathVariable UUID cardId,
+            @RequestParam Double money
+    ){
+        cardService.fillCardMoney(cardId,money);
+        return ResponseEntity.status(200).body("Your balance has been topped up to this amount.("+money.toString()+")");
+    }
 }

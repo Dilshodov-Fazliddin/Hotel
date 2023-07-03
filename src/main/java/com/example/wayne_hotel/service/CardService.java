@@ -64,6 +64,8 @@ public class CardService {
                 .orElseThrow(()->new DataNotFoundException("Card not found"));
 
         if(card.getBalance()<room.getPrice()){
+            user.setCanceledRequest(user.getCanceledRequest()+1);
+            userRepository.save(user);
             throw new NotEnoughBalanceException("not enough money");
         }
         card.setBalance(card.getBalance()-room.getPrice());
@@ -71,6 +73,13 @@ public class CardService {
         user.setRentRoom(room.getNumber());
         cardRepository.save(card);
         userRepository.save(user);
+        }
+
+        public void fillCardMoney(UUID cardId,Double money){
+            CardEntity card=cardRepository.findById(cardId)
+                    .orElseThrow(()->new DataNotFoundException("Card not found"));
+            card.setBalance(card.getBalance()+money);
+            cardRepository.save(card);
         }
 
 }

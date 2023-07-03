@@ -44,5 +44,12 @@ public class RoomController {
         return ResponseEntity.status(200).body(roomService.getAll(size,page,AscPrice,type,hasMonitor));
     }
 
-
+    @PutMapping("/deleteClient")
+    public ResponseEntity<String>deleteRoomOwner(
+        @RequestParam UUID ownerId,
+        @RequestParam UUID roomId
+    ){
+        roomService.deleteClient(ownerId,roomId);
+        return ResponseEntity.status(200).body("Successfully deleted Client");
+    }
 }

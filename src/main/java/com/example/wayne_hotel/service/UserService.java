@@ -39,6 +39,10 @@ public class UserService {
         UserEntity user =
                 userRepository.findUserEntitiesByUsername(loginDto.getUsername())
                         .orElseThrow(()->new DataNotFoundException("Sorry,User not found"));
+        if (user.getCanceledRequest()>=5){
+            blockUsersById(user.getId());
+            throw new AuthenticationFailedException("Your account has blocked,contact admin maybe he can help you");
+        }
         if (user.getIsBlocked()){
             throw new AuthenticationFailedException("Your account has blocked");
         }

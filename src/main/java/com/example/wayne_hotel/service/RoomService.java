@@ -2,10 +2,12 @@ package com.example.wayne_hotel.service;
 
 import com.example.wayne_hotel.dto.RoomDto;
 import com.example.wayne_hotel.entiy.RoomEntity;
+import com.example.wayne_hotel.entiy.UserEntity;
 import com.example.wayne_hotel.enums.HasMonitor;
 import com.example.wayne_hotel.enums.RoomType;
 import com.example.wayne_hotel.exception.DataNotFoundException;
 import com.example.wayne_hotel.repository.RoomRepository;
+import com.example.wayne_hotel.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,6 +24,8 @@ import java.util.UUID;
 public class RoomService {
     private final ModelMapper modelMapper;
     private final RoomRepository roomRepository;
+    private final UserRepository userRepository;
+
 
     public RoomEntity CreateRoom(RoomDto roomDto) {
         RoomEntity room = modelMapper.map(roomDto, RoomEntity.class);
@@ -50,5 +54,18 @@ public class RoomService {
     @Transactional
     public void deleteById(UUID id){
         roomRepository.deleteRoomEntitiesById(id).orElseThrow(()->new DataNotFoundException("Room not found"));
+    }
+
+    public void deleteClient(UUID clientId,UUID roomId){
+        UserEntity user = userRepository.findById(clientId)
+                .orElseThrow(()-> new DataNotFoundException("User not found"));
+        RoomEntity room=roomRepository.findById(roomId)
+                .orElseThrow(()->new DataNotFoundException("Room not found"));
+
+        user.setRentRoom(null);
+        room.setOwner(null);
+
+        userRepository.save(user);
+        roomRepository.save(room);
     }
 }
