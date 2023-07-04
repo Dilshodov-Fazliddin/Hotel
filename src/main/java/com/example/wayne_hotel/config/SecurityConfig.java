@@ -41,6 +41,7 @@ public class SecurityConfig {
                             .requestMatchers("/room/panel/update/").hasRole("ADMIN")
                             .requestMatchers("/room/panel/delete/").hasAnyRole("SUPER_ADMIN","ADMIN")
                             .requestMatchers("/room/panel/showRooms").permitAll()
+                            .requestMatchers("/room/panel/rent").hasRole("USER")
                             .requestMatchers("/room/panel/deleteClient").hasRole("ADMIN")
                        .anyRequest().authenticated();
 

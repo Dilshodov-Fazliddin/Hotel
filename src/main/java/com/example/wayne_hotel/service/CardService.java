@@ -25,8 +25,6 @@ import java.util.UUID;
 public class CardService {
     private final CardRepository cardRepository;
     private final ModelMapper modelMapper;
-    private final UserRepository userRepository;
-    private final RoomRepository roomRepository;
 
     public CardEntity save(CardDto cardDto,UUID owner_id){
         CardEntity card = modelMapper.map(cardDto, CardEntity.class);
@@ -55,25 +53,7 @@ public class CardService {
         return cardRepository.save(card);
     }
 
-    public void rentRoom(UUID userId,UUID roomId,UUID cardId){
-        UserEntity user =userRepository.findById(userId)
-                .orElseThrow(()->new DataNotFoundException("User not found"));
-        RoomEntity room = roomRepository.findById(roomId)
-                .orElseThrow(()->new DataNotFoundException("Room not found"));
-        CardEntity card =cardRepository.findById(cardId)
-                .orElseThrow(()->new DataNotFoundException("Card not found"));
 
-        if(card.getBalance()<room.getPrice()){
-            user.setCanceledRequest(user.getCanceledRequest()+1);
-            userRepository.save(user);
-            throw new NotEnoughBalanceException("not enough money");
-        }
-        card.setBalance(card.getBalance()-room.getPrice());
-        room.setOwner(user);
-        user.setRentRoom(room.getNumber());
-        cardRepository.save(card);
-        userRepository.save(user);
-        }
 
         public void fillCardMoney(UUID cardId,Double money){
             CardEntity card=cardRepository.findById(cardId)

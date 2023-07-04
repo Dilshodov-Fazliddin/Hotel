@@ -20,4 +20,5 @@ public class CardEntity extends BaseEntity{
     private CardType type;
     @ManyToOne
     private UserEntity owner;
+
 }

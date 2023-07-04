@@ -7,8 +7,10 @@ import com.example.wayne_hotel.enums.RoomType;
 import com.example.wayne_hotel.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,5 +53,17 @@ public class RoomController {
     ){
         roomService.deleteClient(ownerId,roomId);
         return ResponseEntity.status(200).body("Successfully deleted Client");
+    }
+
+    @PutMapping("/rent")
+    public ResponseEntity<String>rentRoom(
+            @RequestParam UUID userId,
+            @RequestParam UUID roomId,
+            @RequestParam UUID cardId,
+            @RequestParam LocalDate date,
+            @RequestParam Integer daysForRent
+    ){
+        roomService.rentRoom(userId,roomId,cardId,date,daysForRent);
+        return ResponseEntity.status(200).body("Rent successfully");
     }
 }

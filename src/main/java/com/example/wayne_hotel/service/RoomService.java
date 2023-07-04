@@ -1,11 +1,15 @@
 package com.example.wayne_hotel.service;
 
 import com.example.wayne_hotel.dto.RoomDto;
+import com.example.wayne_hotel.entiy.CardEntity;
 import com.example.wayne_hotel.entiy.RoomEntity;
 import com.example.wayne_hotel.entiy.UserEntity;
 import com.example.wayne_hotel.enums.HasMonitor;
 import com.example.wayne_hotel.enums.RoomType;
 import com.example.wayne_hotel.exception.DataNotFoundException;
+import com.example.wayne_hotel.exception.NotEnoughBalanceException;
+import com.example.wayne_hotel.exception.RentedRoomException;
+import com.example.wayne_hotel.repository.CardRepository;
 import com.example.wayne_hotel.repository.RoomRepository;
 import com.example.wayne_hotel.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -16,6 +20,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +32,7 @@ public class RoomService {
     private final ModelMapper modelMapper;
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
+    private final CardRepository cardRepository;
 
 
     public RoomEntity CreateRoom(RoomDto roomDto) {
@@ -67,5 +75,32 @@ public class RoomService {
 
         userRepository.save(user);
         roomRepository.save(room);
+    }
+    public void rentRoom(UUID userId, UUID roomId, UUID cardId,LocalDate day,Integer daysForRent) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("User not found"));
+        RoomEntity room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new DataNotFoundException("Room not found"));
+        CardEntity card = cardRepository.findById(cardId)
+                .orElseThrow(() -> new DataNotFoundException("Card not found"));
+
+        if (room.getBeginDate().equals(day) || room.getEndDate().equals(day)){
+            throw new RentedRoomException("Sorry room is rented");
+        } else if (day.isAfter(room.getBeginDate()) && day.isBefore(room.getEndDate())) {
+            throw new RentedRoomException("Sorry room is rented");
+        }
+        if(card.getBalance()<room.getPrice()){
+            user.setCanceledRequest(user.getCanceledRequest()+1);
+            userRepository.save(user);
+            throw new NotEnoughBalanceException("not enough money");
+        }
+        LocalDate newDate=day.plusDays(daysForRent);
+        room.setBeginDate(day);
+        room.setOwner(user);
+        room.setEndDate(newDate);
+        card.setBalance(card.getBalance()-room.getPrice());
+        user.setRentRoom(room.getNumber());
+        cardRepository.save(card);
+        userRepository.save(user);
     }
 }

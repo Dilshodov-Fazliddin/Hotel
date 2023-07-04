@@ -17,6 +17,7 @@ import java.util.UUID;
 public class CardController {
     private final CardService cardService;
 
+
     @PreAuthorize(value = "hasRole('USER')")
     @PostMapping("/save/{ownerId}")
     public ResponseEntity<String> saveCard(
@@ -55,17 +56,6 @@ public class CardController {
     }
 
 
-    @PreAuthorize(value = "hasRole('USER')")
-    @PutMapping("/rent")
-    public ResponseEntity<String>rentRoom(
-            @RequestParam UUID userId,
-            @RequestParam UUID roomId,
-            @RequestParam UUID cardId
-    ){
-        cardService.rentRoom(userId,roomId,cardId);
-        return ResponseEntity.status(200).body("Rent successfully");
-    }
-
     @PutMapping("/fillBalance/{cardId}")
     @PreAuthorize(value = "hasRole('USER')")
     public ResponseEntity<String>fillCardMoney(
@@ -75,4 +65,6 @@ public class CardController {
         cardService.fillCardMoney(cardId,money);
         return ResponseEntity.status(200).body("Your balance has been topped up to this amount.("+money.toString()+")");
     }
+
+
 }

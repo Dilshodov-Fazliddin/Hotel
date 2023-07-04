@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.access.annotation.Secured;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -18,4 +21,6 @@ public class RoomDto {
     private RoomType type;
     private HasMonitor hasMonitor;
     private Double price;
+    private LocalDate beginDate;
+    private LocalDate endDate;
 }
