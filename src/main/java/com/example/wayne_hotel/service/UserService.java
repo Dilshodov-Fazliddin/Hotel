@@ -7,11 +7,14 @@ import com.example.wayne_hotel.entiy.UserEntity;
 import com.example.wayne_hotel.enums.UserRole;
 import com.example.wayne_hotel.exception.AuthenticationFailedException;
 import com.example.wayne_hotel.exception.DataNotFoundException;
+import com.example.wayne_hotel.exception.RequestValidationException;
 import com.example.wayne_hotel.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import java.security.Principal;
 import java.util.List;
@@ -25,7 +28,11 @@ public class UserService {
     private final JwtService jwtService;
     private final ModelMapper modelMapper;
 
-    public UserEntity saveUser(UserDto userDto, List<UserRole>roles){
+    public UserEntity saveUser(UserDto userDto, List<UserRole>roles, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            throw new RequestValidationException(errors);
+        }
         UserEntity user = modelMapper.map(userDto, UserEntity.class);
         user.setCanceledRequest(0);
         user.setUnpaidRequest(0);

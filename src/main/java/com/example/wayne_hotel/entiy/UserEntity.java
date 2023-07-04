@@ -20,20 +20,29 @@ import java.util.List;
 @Builder
 public class UserEntity extends BaseEntity implements UserDetails {
     private String name;
-    @Column(unique = true,nullable = false)
+
+    @Column(unique = true)
     private String email;
+
     @Column(unique = true,nullable = false)
     private String username;
-    @Column(nullable = false)
+
     private String password;
+
     private Integer age;
+
     @Enumerated(value = EnumType.STRING)
     private List<UserRole> roles;
+
     @JsonIgnore
     private Integer unpaidRequest;
+
     @JsonIgnore
     private Integer canceledRequest;
+
     private Boolean isBlocked;
+
+    @JsonIgnore
     private String RentRoom;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

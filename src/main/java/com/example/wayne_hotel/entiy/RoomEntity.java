@@ -21,18 +21,32 @@ import java.util.Date;
 @Setter
 
 public class RoomEntity extends BaseEntity {
+    @Column(unique = true,nullable = false)
     private String number;
+
+    @Column(unique = true,nullable = false)
     private Integer size;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RoomType type;
+
+    @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private HasMonitor monitor;
+
     @ManyToOne
     private UserEntity owner;
+
+    @Column(nullable = false)
     @JsonDeserialize(using = DateDeserializers.DateDeserializer.class)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate beginDate;
+
+    @Column(nullable = false)
     @JsonDeserialize(using = DateDeserializers.DateDeserializer.class)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate endDate;

@@ -5,6 +5,7 @@ import com.example.wayne_hotel.entiy.RoomEntity;
 import com.example.wayne_hotel.enums.HasMonitor;
 import com.example.wayne_hotel.enums.RoomType;
 import com.example.wayne_hotel.service.RoomService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,12 +21,12 @@ import java.util.UUID;
 public class RoomController {
     private final RoomService roomService;
     @PostMapping("/save")
-    public ResponseEntity<RoomEntity> saveRoom(@RequestBody RoomDto roomDto){
+    public ResponseEntity<RoomEntity> saveRoom(@Valid @RequestBody RoomDto roomDto){
         return ResponseEntity.ok(roomService.CreateRoom(roomDto));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<RoomEntity> updateRoom(@PathVariable UUID id, @RequestBody RoomDto roomDto){
+    public ResponseEntity<RoomEntity> updateRoom(@PathVariable UUID id,@Valid @RequestBody RoomDto roomDto){
         return ResponseEntity.ok(roomService.update(id,roomDto));
     }
 
