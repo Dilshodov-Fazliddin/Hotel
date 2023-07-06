@@ -35,9 +35,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private List<UserRole> roles;
 
     @JsonIgnore
-    private Integer unpaidRequest;
-
-    @JsonIgnore
     private Integer canceledRequest;
 
     private Boolean isBlocked;
