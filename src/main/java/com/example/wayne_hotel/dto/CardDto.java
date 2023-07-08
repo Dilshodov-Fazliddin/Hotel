@@ -16,8 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 public class CardDto {
-    @NotBlank(message = "number cannot be empty")
     private String number;
-    @NotBlank(message = "type cannot be empty")
     private CardType type;
 }

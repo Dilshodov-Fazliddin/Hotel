@@ -31,6 +31,7 @@ public class CardService {
         UserEntity user = new UserEntity();
         user.setId(owner_id);
         card.setOwner(user);
+        card.setBalance(0.0);
         return cardRepository.save(card);
     }
 

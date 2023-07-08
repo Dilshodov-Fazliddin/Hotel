@@ -94,11 +94,13 @@ public class RoomService {
             userRepository.save(user);
             throw new NotEnoughBalanceException("not enough money");
         }
+        for (int i = 0; i < daysForRent; i++) {
+            card.setBalance(card.getBalance()-room.getPrice());
+        }
         LocalDate newDate=day.plusDays(daysForRent);
         room.setBeginDate(day);
         room.setOwner(user);
         room.setEndDate(newDate);
-        card.setBalance(card.getBalance()-room.getPrice());
         user.setRentRoom(room.getNumber());
         cardRepository.save(card);
         userRepository.save(user);
