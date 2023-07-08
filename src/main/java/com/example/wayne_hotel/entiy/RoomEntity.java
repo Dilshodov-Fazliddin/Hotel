@@ -24,7 +24,7 @@ public class RoomEntity extends BaseEntity {
     @Column(unique = true,nullable = false)
     private String number;
 
-    @Column(unique = true,nullable = false)
+    @Column(nullable = false)
     private Integer size;
 
     @Column(nullable = false)

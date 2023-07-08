@@ -17,24 +17,17 @@ import java.util.Date;
 @Getter
 @Setter
 public class RoomDto {
-    @NotBlank(message = "number Cannot be blank")
     private String number;
 
-    @NotBlank(message = "size Cannot be blank")
     private Integer size;
 
-    @NotBlank(message = "type Cannot be blank")
     private RoomType type;
 
-    @NotBlank(message = "has monitor Cannot be blank")
     private HasMonitor hasMonitor;
 
-    @NotBlank(message = "price Cannot be blank")
     private Double price;
 
-    @NotBlank(message = "Begin date Cannot be blank")
     private LocalDate beginDate;
 
-    @NotBlank(message = "End date Cannot be blank")
     private LocalDate endDate;
 }
