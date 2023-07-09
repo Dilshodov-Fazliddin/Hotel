@@ -19,7 +19,7 @@ public class UserDto {
     @NotBlank(message = "username Cannot be blank")
     private String username;
 
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Invalid password")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Invalid password Example:#Password1")
     private String password;
 
     @NotNull(message = "age Cannot be empty")
