@@ -26,10 +26,10 @@ public class CardService {
     private final CardRepository cardRepository;
     private final ModelMapper modelMapper;
 
-    public CardEntity save(CardDto cardDto,UUID owner_id){
+    public CardEntity save(CardDto cardDto,UUID ownerId){
         CardEntity card = modelMapper.map(cardDto, CardEntity.class);
         UserEntity user = new UserEntity();
-        user.setId(owner_id);
+        user.setId(ownerId);
         card.setOwner(user);
         card.setBalance(0.0);
         return cardRepository.save(card);
@@ -47,14 +47,12 @@ public class CardService {
         cardRepository.deleteById(id);
     }
 
-    public CardEntity update(UUID id,CardDto cardDto){
+    public CardEntity update(UUID id,CardDto cardDto) {
         CardEntity card = cardRepository.findById(id)
-                .orElseThrow(()->new DataNotFoundException("Card not found"));
-        modelMapper.map(cardDto,card);
+                .orElseThrow(() -> new DataNotFoundException("Card not found"));
+        modelMapper.map(cardDto, card);
         return cardRepository.save(card);
     }
-
-
 
         public void fillCardMoney(UUID cardId,Double money){
             CardEntity card=cardRepository.findById(cardId)

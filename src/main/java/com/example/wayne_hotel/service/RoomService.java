@@ -97,6 +97,7 @@ public class RoomService {
         for (int i = 0; i < daysForRent; i++) {
             card.setBalance(card.getBalance()-room.getPrice());
         }
+
         LocalDate newDate=day.plusDays(daysForRent);
         room.setBeginDate(day);
         room.setOwner(user);
