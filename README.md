@@ -1,14 +1,8 @@
-![License](https://img.shields.io/github/license/Dilshodov-Fazliddin/Hotel.svg?style=for-the-badge) ![Repo Size](https://img.shields.io/github/languages/code-size/Dilshodov-Fazliddin/Hotel.svg?style=for-the-badge) ![TOP_LANGUAGE](https://img.shields.io/github/languages/top/Dilshodov-Fazliddin/Hotel.svg?style=for-the-badge) ![FORKS](https://img.shields.io/github/forks/Dilshodov-Fazliddin/Hotel.svg?style=for-the-badge&social) ![Stars](https://img.shields.io/github/stars/Dilshodov-Fazliddin/Hotel.svg?style=for-the-badge)
-    
 # Hotel Project
 
 ## Description
 
 A small Spring Boot application for hotel systems can be built to provide various RESTful APIs for managing hotel-related operations.
-
-## Screenshots
-
-<img src="" />## Built With
 
 <a href="https://docs.oracle.com/javase/tutorial/index.html"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" height="40px" width="40px" /></a><a href="https://www.postgresql.org/"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" height="40px" width="40px" /></a>
 
@@ -53,18 +47,3 @@ Set request body (if required): If your API expects a request body (for POST or 
 Send the request: Once you have set up the request URL, headers, and body (if applicable), click the "Send" button in Postman to send the request to your Spring Boot application.
 
 View the response: Postman will display the response received from the API in the "Response" section. You can examine the response status code, headers, and body to verify the behavior of your API.
-
-
-
-
-## License
-
-<a href="https://choosealicense.com/licenses/mit/"><img src="https://raw.githubusercontent.com/johnturner4004/readme-generator/master/src/components/assets/images/mit.svg" height=40 />MIT License</a>
-
-## Acknowledgements
-
-Who helped you make this project a reality? Friends? Family? Contributors? Instructors?
-
-## Contacts
-
-<a href="https://www.linkedin.com/in/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>  <a href="mailto:"><img src=https://raw.githubusercontent.com/johnturner4004/readme-generator/master/src/components/assets/images/email_me_button_icon_151852.svg /></a>
