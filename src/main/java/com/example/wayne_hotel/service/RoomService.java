@@ -33,6 +33,8 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
     private final CardRepository cardRepository;
+    private final MailService mailService;
+
 
 
     public RoomEntity CreateRoom(RoomDto roomDto) {
@@ -103,6 +105,7 @@ public class RoomService {
         room.setOwner(user);
         room.setEndDate(newDate);
         user.setRentRoom(room.getNumber());
+        mailService.sendInfoPurchased(user.getEmail(),daysForRent, room.getPrice(),room.getNumber());
         cardRepository.save(card);
         userRepository.save(user);
     }

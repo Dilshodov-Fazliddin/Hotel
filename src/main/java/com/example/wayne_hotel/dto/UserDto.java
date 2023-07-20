@@ -14,6 +14,8 @@ public class UserDto {
     private String name;
 
     @NotBlank(message = "email Cannot be blank")
+    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?^_`{|}~-]+)*@"
+            + "[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")
     private String email;
 
     @NotBlank(message = "username Cannot be blank")
