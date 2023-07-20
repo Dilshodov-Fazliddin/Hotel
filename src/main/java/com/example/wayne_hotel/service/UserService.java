@@ -27,6 +27,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final ModelMapper modelMapper;
+    private final MailService mailService;
+
 
     public UserEntity saveUser(UserDto userDto, List<UserRole>roles, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
@@ -34,6 +36,7 @@ public class UserService {
             throw new RequestValidationException(errors);
         }
         UserEntity user = modelMapper.map(userDto, UserEntity.class);
+
         user.setCanceledRequest(0);
         user.setIsBlocked(false);
         user.setRoles(roles);
@@ -63,16 +66,17 @@ public class UserService {
 
 
     public JwtTokenResponse createNewAccessToken(Principal principal){
-        UserEntity user=userRepository.findUserEntitiesByUsername(principal.getName())
+        UserEntity user=userRepository.findUserEntityByName(principal.getName())
                 .orElseThrow(()->new DataNotFoundException("user not found"));
-        String accessToken = jwtService.generateAccessToken(user);
-        return JwtTokenResponse.builder().jwtToken(accessToken).build();
+        String accessToken = jwtService.generateRefreshToken(user);
+        return JwtTokenResponse.builder().refreshToken(accessToken).build();
     }
 
     public void blockUsersById(UUID id){
         UserEntity user=userRepository.findById(id)
                 .orElseThrow(()->new DataNotFoundException("User not found"));
         user.setIsBlocked(true);
+        mailService.sendInfoBlockAccount(user.getEmail().trim());
         userRepository.save(user);
     }
 
@@ -80,6 +84,7 @@ public class UserService {
         UserEntity user=userRepository.findById(id)
                 .orElseThrow(()->new DataNotFoundException("User not found"));
         user.setIsBlocked(false);
+        mailService.sendInfoUnBlockAccount(user.getEmail());
         userRepository.save(user);
     }
 }
